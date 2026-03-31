@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🚀 First Quest: UCO Newbie Guide</title>
+	<link rel="icon" type="image/png" href="UCO_logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --neon-purple: #9d00ff;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(20, 20, 35, 0.8);
+            --success: #00ff88;
+            --warning: #ffaa00;
+        }
+
+        body {
+			margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        .uco-logo-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .uco-logo-main {
+            width: 130px;
+            border-radius: 25px;
+            box-shadow:
+                0 0 20px rgba(157,0,255,0.7),
+                0 0 40px rgba(0,255,255,0.4);
+        }
+
+        .uco-logo-small {
+            width: 40px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: auto 0 0 auto;
+            width: 160px;
+            height: 160px;
+            background: url('UCO_logo_2.jpg') no-repeat;
+            background-size: contain;
+            background-position: right bottom;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(157, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px 20px;
+            position: relative;
+        }
+
+        .glitch-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            text-shadow: 
+                0 0 10px var(--neon-cyan),
+                0 0 20px var(--neon-cyan),
+                0 0 40px var(--neon-cyan);
+            animation: glitch 3s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--neon-pink);
+            margin-top: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .player-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--neon-cyan);
+            padding: 15px 25px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            font-weight: 700;
+        }
+
+        .progress-container {
+            max-width: 600px;
+			margin: 20px auto 10px; 
+			padding: 0 20px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--neon-purple);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-cyan));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-family: 'Orbitron', monospace;
+            color: var(--neon-cyan);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+			padding: 10px 20px 20px;
+        }
+
+        .level-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan), var(--neon-purple));
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-cyan);
+        }
+
+        .level-header {
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            background: linear-gradient(135deg, rgba(157, 0, 255, 0.1), transparent);
+            position: relative;
+            touch-action: manipulation; /* iOS: optimize for touch */
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+            flex-shrink: 0;
+            pointer-events: none; /* Prevent icon from blocking clicks */
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .level-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .level-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: var(--neon-pink);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .level-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 5px;
+            color: #fff;
+            word-wrap: break-word;
+        }
+
+        .level-xp {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            pointer-events: none; /* Prevent blocking clicks */
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            color: var(--neon-cyan);
+            flex-shrink: 0;
+            pointer-events: none; /* Prevent blocking clicks */
+        }
+
+        .level-card.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .level-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .level-card.active .level-content {
+            max-height: 2000px;
+        }
+
+        .level-body {
+            padding: 0 30px 30px;
+        }
+
+        .quest-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quest-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quest-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--neon-cyan);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .quest-item:hover::before {
+            opacity: 1;
+        }
+
+        .quest-item:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--neon-cyan);
+            transform: translateX(5px);
+        }
+
+        .quest-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #fec465;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .quest-checkbox:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .quest-checkbox.checked {
+            background: var(--success);
+            border-color: var(--success);
+            box-shadow: 0 0 15px var(--success);
+        }
+
+        .quest-checkbox.checked::after {
+            content: '✓';
+            color: #000;
+            font-weight: bold;
+        }
+
+        .quest-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .quest-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+        }
+
+        .quest-desc {
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .quest-meta {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(157, 0, 255, 0.2);
+            border: 1px solid var(--neon-purple);
+            color: var(--neon-purple);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tag.cyan {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+
+        .tag.warning {
+            background: rgba(255, 170, 0, 0.1);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .link-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(0,255,255,0.1), rgba(157,0,255,0.1));
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-card:hover::before {
+            left: 100%;
+        }
+
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .link-card:active {
+            transform: translateY(0);
+        }
+
+        .pro-tip {
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(255,170,0,0.1));
+            border: 1px solid var(--neon-pink);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .pro-tip-icon {
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .pro-tip-content h4 {
+            color: var(--neon-pink);
+            margin-bottom: 5px;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .pro-tip-content p {
+            color: #ccc;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .password-box {
+            background: rgba(0,0,0,0.5);
+            border: 1px dashed var(--warning);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            -webkit-user-select: none;
+            user-select: none;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .password-box:hover {
+            background: rgba(255,170,0,0.1);
+            border-style: solid;
+        }
+
+        .password-hidden {
+            filter: blur(4px);
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .password-box.revealed .password-hidden {
+            filter: none;
+            user-select: text;
+            -webkit-user-select: text;
+        }
+
+        @media (max-width: 600px) {
+            .level-header {
+                padding: 20px;
+                gap: 12px;
+            }
+            
+            .level-icon {
+                font-size: 2rem;
+            }
+            
+            .level-title {
+                font-size: 1.2rem;
+            }
+            
+            .level-xp {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+            
+            .level-body {
+                padding: 0 20px 20px;
+            }
+            
+            .quest-item {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .player-stats {
+                gap: 15px;
+            }
+            
+            .stat-box {
+                padding: 12px 18px;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
+            }
+        }
+
+        .completion-badge {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
+            padding: 40px 60px;
+            border-radius: 20px;
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: auto;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .completion-badge.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .completion-badge h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .completion-badge p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-purple);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-cyan);
+        }
+		
+		.watermark-box {
+			position: fixed;
+			bottom: 10px;
+			left: 10px;
+			z-index: 100;
+			opacity: 0.1;
+			pointer-events: none;
+			transition: opacity 0.3s ease;
+			background: var(--card-bg);
+			border: 1px solid var(--neon-cyan);
+			text-align: center;
+			transform: scale(0.67);
+			transform-origin: left bottom;
+            -webkit-user-select: none;
+            user-select: none;
+		}
+
+		.watermark-box:hover {
+			opacity: 0.8;
+		}
+		
+		footer { 
+            text-align: center; 
+            margin: 5px 0; 
+            color: var(--text-dim); 
+            font-size: 0.8rem; 
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+
+<header class="header">
+
+    <div class="uco-logo-wrap">
+        <img src="UCO_logo.png" alt="UCO Logo" class="uco-logo-main">
+    </div>
+
+    <h1 class="glitch-title">NEWBIE QUEST</h1>
+    <p class="subtitle">Прохождение: UCO Consultant v1.0</p>
+        
+        <div class="player-stats">
+            <div class="stat-box">
+                <div class="stat-label">Ранг</div>
+                <div class="stat-value" id="rank">Новичок</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">XP Progress</div>
+                <div class="stat-value" id="xp">0/100</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Уровень</div>
+                <div class="stat-value" id="level">1</div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">0% — Только начинаем путешествие!</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Level 1 -->
+        <div class="level-card" data-level="1">
+            <!-- Добавлен ontouchstart="" для iOS и role="button" tabindex="0" для accessibility -->
+            <div class="level-header" onclick="toggleLevel(this)" ontouchstart="" role="button" tabindex="0">
+                <span class="level-icon">🎮</span>
+                <div class="level-info">
+                    <div class="level-number">LEVEL 01</div>
+                    <div class="level-title">Базовые доступы</div>
+                </div>
+                <span class="level-xp">+24 XP</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="level-content">
+                <div class="level-body">
+                    <div class="quest-list">
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 4)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">📶 Подключись к сети <span style="color: #fec465;">UCOWIFI</span></div>
+                                <div class="quest-desc">Первый шаг к миру технологий.</div>
+                                <div class="password-box" onclick="togglePassword(this)" ontouchstart="" role="button" tabindex="0">
+                                    <span>🔐</span>
+                                    <span class="password-hidden">!ucokz@2</span>
+                                    <span style="margin-left: auto; font-size: 0.8rem; color: var(--warning);">(кликни чтобы показать)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 4)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">📧 Получи корпоративную почту</div>
+                                <div class="quest-desc">Заводит: Офис Менеджер. Это твой главный канал коммуникации с Заказчиками.</div>
+                                <div class="quest-meta">
+                                <a href="https://e.mail.ru/inbox" class="link-card" target="_blank">
+                                    📧 Открыть e-mail
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 4)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">✒️ Активируй учетку в Effica</div>
+                                <div class="quest-desc">Заводит: Офис Менеджер. Для кадрового документооборота и заявок.</div>
+                                <a href="https://uco.effica.kz/requests" class="link-card" target="_blank">
+                                    ✒️ Открыть Effica
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 4)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🎯 Получи доступ к Jira</div>
+                                <div class="quest-desc">Заводит: Проектный Менеджер. Твоя доска задач на большинстве проектов.</div>
+                                <a href="https://apps.uco.kz/jira/" class="link-card" target="_blank">
+                                    🎯 Открыть Jira
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 4)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🐙 Получи доступ к GitLab</div>
+                                <div class="quest-desc">Заводит: DevOps Инженер. Список задач для единичных проектов.</div>
+                                <a href="https://apps.uco.kz/gitlab/" class="link-card" target="_blank">
+                                    🐙 Открыть GitLab
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 4)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🚪 Получи пропуск к СКУД</div>
+                                <div class="quest-desc">Заводит: DevOps Инженер. Чтобы попасть в офис без проблем.</div>
+                                <div class="quest-meta">
+                                    <span class="tag warning">Важно</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-tip">
+                        <span class="pro-tip-icon">💡</span>
+                        <div class="pro-tip-content">
+                            <h4>PRO TIP</h4>
+                            <p>Сохрани пароли в менеджер паролей сразу.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 2 -->
+        <div class="level-card" data-level="2">
+            <div class="level-header" onclick="toggleLevel(this)" ontouchstart="" role="button" tabindex="0">
+                <span class="level-icon">📚</span>
+                <div class="level-info">
+                    <div class="level-number">LEVEL 02</div>
+                    <div class="level-title">Мастер документов</div>
+                </div>
+                <span class="level-xp">+30 XP</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="level-content">
+                <div class="level-body">
+                    <div class="quest-list">
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">📜 Правила трудового распорядка</div>
+                                <div class="quest-desc">Базовые правила игры. <span style="color: #fec465;">Обязательно к прочтению!</span></div>
+                                <a href="https://uco.effica.kz/documents/company/" class="link-card" target="_blank">
+                                    📖 Читать
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">⏱️ Приказ ПР-1: Учет рабочего времени</div>
+                                <div class="quest-desc">Как табелироваться.</div>
+                                <a href="https://uco.effica.kz/documents/company/" class="link-card" target="_blank">
+                                    📖 Читать
+                                </a>
+                                <div class="quest-meta" style="margin-top: 10px;">
+                                    <a href="https://info.uco.kz/ucp/#main/" class="link-card" target="_blank">
+                                        ⏱️ Перейти к табелированию
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">📋 Приказ ПР-2: Электронный документооборот</div>
+                                <div class="quest-desc">Все кадровые процессы у нас цифровые.</div>
+                                <a href="https://uco.effica.kz/documents/company/" class="link-card" target="_blank">
+                                    📖 Читать
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🏗️ Стандарты библиотеки проектов UCO</div>
+                                <div class="quest-desc">Как организованы проекты в Confluence.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186485077" class="link-card" target="_blank">
+                                    🏗️ Открыть
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🎯 Правила создания задач в JIRA</div>
+                                <div class="quest-desc">Как правильно заводить задачи, чтобы не бесить Коллег.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186486370" class="link-card" target="_blank">
+                                    🎯 Открыть
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-tip">
+                        <span class="pro-tip-icon">⚡</span>
+                        <div class="pro-tip-content">
+                            <h4>LIFE HACK</h4>
+                            <p>Закрепи все ссылки в закладках браузера по папкам: "Документы", "Рабочие инструменты", "Полезное". Сэкономит кучу времени!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 3 -->
+        <div class="level-card" data-level="3">
+            <div class="level-header" onclick="toggleLevel(this)" ontouchstart="" role="button" tabindex="0">
+                <span class="level-icon">🏗️</span>
+                <div class="level-info">
+                    <div class="level-number">LEVEL 03</div>
+                    <div class="level-title">Архитектор проектов</div>
+                </div>
+                <span class="level-xp">+36 XP</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="level-content">
+                <div class="level-body">
+                    <p style="color: #aaa; margin-bottom: 20px;">Вся документация хранится в двух местах: Confluence (справочная инфа) и Nextcloud (файлы). Структура строго регламентирована!</p> <!-- Данный HTML написан при помощи неиросети KIMI Герасимовым Егором 2026-03-30 -->
+                    
+                    <div class="quest-list">
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">👤 Шаблон профиля Клиента (Confluence)</div>
+                                <div class="quest-desc">Включает подключения к серверам, продукты, соглашения об интеграции.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186485050" class="link-card" target="_blank">
+                                    👤 Открыть шаблон
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🧰 Шаблон проекта внедрения (Confluence)</div>
+                                <div class="quest-desc">Документы на старте, модули системы, этапы, запросы на изменения.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186484832" class="link-card" target="_blank">
+                                    🧰 Открыть шаблон
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🛠️ Шаблон проекта техподдержки (Confluence)</div>
+                                <div class="quest-desc">Включает раздел SLA.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186484184" class="link-card" target="_blank">
+                                    🛠️ Открыть шаблон
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">📈 Шаблон проекта развития (Confluence)</div>
+                                <div class="quest-desc">Запросы на изменения.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186484182" class="link-card" target="_blank">
+                                    📈 Открыть шаблон
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">📁 Шаблон проекта внедрения (Nextcloud)</div>
+                                <div class="quest-desc">Папки: Presale, Инициирование, Анализ и дизайн, Реализация, ОПЭ, Архив + шаблоны документов.</div>
+                                <a href="https://portal.uco.kz/index.php/f/127270" class="link-card" target="_blank">
+                                    📁 Открыть папку
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+                            <div class="quest-checkbox" onclick="toggleQuest(this, 6)"></div>
+                            <div class="quest-content">
+                                <div class="quest-title">🗂️ Шаблон проекта развития (Nextcloud)</div>
+                                <div class="quest-desc">Структура папок и шаблоны документов для проектов развития.</div>
+                                <a href="https://portal.uco.kz/index.php/f/127272" class="link-card" target="_blank">
+                                    🗂️ Открыть папку
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-tip">
+                        <span class="pro-tip-icon">🎯</span>
+                        <div class="pro-tip-content">
+                            <h4>ARCHITECT'S SECRET</h4>
+                            <p>Копируй структуру шаблона при создании нового проекта — не изобретай велосипед. Консистентность = профессионализм.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level 4 -->
+        <div class="level-card" data-level="4">
+            <div class="level-header" onclick="toggleLevel(this)" ontouchstart="" role="button" tabindex="0">
+                <span class="level-icon">🎓</span>
+                <div class="level-info">
+                    <div class="level-number">FINAL LEVEL</div>
+                    <div class="level-title">Главные ресурсы</div>
+                </div>
+                <span class="level-xp">+10 XP</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="level-content">
+                <div class="level-body">
+                    <div class="quest-list">
+                        <div class="quest-item">
+						    <div class="quest-checkbox" onclick="toggleQuest(this, 5)"></div>
+                            <div class="quest-content" style="margin-left: 0;">
+                                <div class="quest-title">📚 Confluence — Справочная информация</div>
+                                <div class="quest-desc">Вся база знаний компании. Ищи здесь ответы на вопросы.</div>
+                                <a href="https://apps.uco.kz/confluence/pages/viewpage.action?pageId=186486468" class="link-card" target="_blank">
+                                    📚 Открыть Confluence
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="quest-item">
+						    <div class="quest-checkbox" onclick="toggleQuest(this, 5)"></div>
+                            <div class="quest-content" style="margin-left: 0;">
+                                <div class="quest-title">☁️ Nextcloud — Файлы</div>
+                                <div class="quest-desc">Хранилище документов и рабочих файлов.</div>
+                                <a href="https://portal.uco.kz/index.php/f/124819" class="link-card" target="_blank">
+                                    ☁️ Открыть Nextcloud
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pro-tip" style="background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,255,255,0.1)); border-color: var(--success);">
+                        <span class="pro-tip-icon" style="animation: none; font-size: 3rem;">🏆</span>
+                        <div class="pro-tip-content">
+                            <h4 style="color: var(--success);">FINAL BOSS DEFEATED!</h4>
+                            <p>Теперь ты готов к работе в UCO! <br>Помни: всегда двигай задачи по Kanban-доске в Jira, табелируйся ежедневно и не бойся задавать вопросы.</p>
+							<p style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 1.1rem;">
+								Welcome to the Team! 🚀
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="completion-badge" id="completionBadge">
+        <h2>🎉 QUEST COMPLETED! 🎉</h2>
+        <p>Ты прошел все уровни и готов к работе!</p>
+        <p style="margin-top: 10px; font-size: 1.2rem; color: #fff;">Добро пожаловать в UCO! 🚀</p>
+    </div>
+
+    <script>
+        let totalXP = 0;
+        const maxXP = 100;
+        const ranks = [
+            { xp: 0, name: "Новичок" },
+			{ xp: 24, name: "Салага" },
+            { xp: 54, name: "Стажер" },
+			{ xp: 90, name: "Камрад" },
+            { xp: 100, name: "Младший консультант" }
+        ];
+		
+		const levelsData = [
+			{ xp: 0,   text: "0% — Ключ на Старт! 🚀" },
+			{ xp: 10,  text: "10% — Первые шаги уже сделаны 💪" },
+			{ xp: 20,  text: "20% — Осваиваешься 👀" },
+			{ xp: 30,  text: "30% — Уже не просто новичок ⚡" },
+			{ xp: 40,  text: "40% — Продвигаешься уверенно 🔋" },
+			{ xp: 50,  text: "50% — Половина задания пройдена! 🔥" },
+			{ xp: 60,  text: "60% — Просто продолжай работать ☕" },
+			{ xp: 70,  text: "70% — Сквозь терни к звездам ⭐"},
+			{ xp: 80,  text: "80% — Инструментарий в твоих руках 🧰" },
+			{ xp: 90,  text: "90% — База знаний загружена 🧠" },
+			{ xp: 100, text: "100% — Консультант UCO 🏆" }
+		];
+
+        function toggleLevel(header) {
+            const card = header.parentElement;
+            card.classList.toggle('active');
+			saveState();
+        }
+
+        function toggleQuest(checkbox, xp) {
+            checkbox.classList.toggle('checked');
+            
+            if (checkbox.classList.contains('checked')) {
+                totalXP = Math.min(totalXP + xp, maxXP);
+                checkbox.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    checkbox.style.transform = 'scale(1)';
+                }, 200);
+            } else {
+                totalXP = Math.max(totalXP - xp, 0);
+            }
+            
+            updateProgress();
+			saveState();
+        }
+
+        function togglePassword(box) {
+            box.classList.toggle('revealed');
+            const text = box.querySelector('span:last-child');
+            text.textContent = box.classList.contains('revealed') ? '(кликни чтобы скрыть)' : '(кликни чтобы показать)';
+        }
+		
+		function getLevel(xp) {
+			if (xp >= 100) return 5;
+			if (xp >= 90) return 4;
+			if (xp >= 54) return 3;
+			if (xp >= 24) return 2;
+			return 1;
+		}
+		
+		function getLevelData(xp) {
+			const currentLevel = [...levelsData].reverse().find(level => xp >= level.xp);
+			return currentLevel || levelsData[0];
+		}
+
+        function updateProgress() {
+            const percentage = (totalXP / maxXP) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('xp').textContent = `${totalXP}/${maxXP}`;
+			document.getElementById('xp-watermark').textContent = `${totalXP}`;
+            
+            const currentRank = ranks.slice().reverse().find(r => totalXP >= r.xp);
+            document.getElementById('rank').textContent = currentRank.name;
+            
+			const level = getLevel(totalXP);
+			document.getElementById('level').textContent = level;
+            
+			const levelData = getLevelData(totalXP);
+			document.getElementById('progressText').textContent = levelData.text;
+			
+			if (totalXP >= maxXP) {
+				setTimeout(() => {
+					document.getElementById('completionBadge').classList.add('show');
+				}, 500);
+			}
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+			loadState();
+            updateProgress();
+        });
+
+        document.querySelectorAll('.quest-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+		
+		document.getElementById('completionBadge').addEventListener('click', function() {
+			this.classList.remove('show');
+		});
+		
+        function saveState() {
+            const checkboxes = document.querySelectorAll('.quest-checkbox');
+            const checked = [];
+            checkboxes.forEach((cb, index) => {
+                if (cb.classList.contains('checked')) {
+                    checked.push(index);
+                }
+            });
+            localStorage.setItem('uco_checkboxes', JSON.stringify(checked));
+
+            const levels = document.querySelectorAll('.level-card');
+            const active = [];
+            levels.forEach((level, index) => {
+                if (level.classList.contains('active')) {
+                    active.push(index);
+                }
+            });
+            localStorage.setItem('uco_levels', JSON.stringify(active));
+            
+            localStorage.setItem('uco_xp', totalXP);
+        }
+
+        function loadState() {
+            const savedXP = localStorage.getItem('uco_xp');
+            if (savedXP !== null) {
+                totalXP = parseInt(savedXP, 10);
+            }
+
+            const savedCheckboxes = JSON.parse(localStorage.getItem('uco_checkboxes'));
+            if (savedCheckboxes) {
+                const checkboxes = document.querySelectorAll('.quest-checkbox');
+                savedCheckboxes.forEach(index => {
+                    if (checkboxes[index]) checkboxes[index].classList.add('checked');
+                });
+            }
+
+            const savedLevels = JSON.parse(localStorage.getItem('uco_levels'));
+            if (savedLevels) {
+                const levels = document.querySelectorAll('.level-card');
+                levels.forEach(level => level.classList.remove('active'));
+                savedLevels.forEach(index => {
+                    if (levels[index]) levels[index].classList.add('active');
+                });
+            }
+        }
+    </script>
+	<div class="stat-box watermark-box">
+        <div class="stat-label">XP</div>
+        <div class="stat-value" id="xp-watermark">0</div>
+    </div>
+	<footer>
+		<p>© 2026 United Consultants</p>
+	</footer>
+</body>
+</html>
